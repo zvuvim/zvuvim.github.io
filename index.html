@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    color-scheme: light dark;
     --font-display: 'Fredoka', sans-serif;
     --font-body: 'Nunito', 'Helvetica Neue', Arial, sans-serif;
     --sun: #FFC93C;
@@ -18,25 +17,14 @@
     --sky: #3EC1D3;
     --paper: #FFF9EC;
     --ink: #1B2E28;
-    --fg: var(--ink);
-    --bg: var(--paper);
-    --accent: var(--fern);
-    --muted: #5a5a5a;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --fg: var(--paper);
-      --bg: var(--ink);
-      --accent: var(--sky);
-      --muted: #a0a0a0;
-    }
+    --muted: #5a6b63;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     font-family: var(--font-body);
-    color: var(--fg);
-    background: var(--bg);
+    color: var(--ink);
+    background: var(--paper);
     line-height: 1.5;
   }
   main {
@@ -45,26 +33,43 @@
     padding: 3rem 1.5rem 4rem;
   }
   header.hero {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
+    text-align: center;
+    padding: 1rem 0 0.5rem;
+  }
+  .mark-wrap {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+  }
+  .mark-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    background: var(--sun);
+    border-radius: 50%;
+    opacity: 0.35;
+    z-index: 0;
   }
   header.hero svg {
-    width: 72px;
-    height: 72px;
-    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    width: 180px;
+    height: 180px;
+    display: block;
+    margin: 0 auto;
   }
   h1 {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 2.25rem;
-    margin: 0;
+    font-size: 2.75rem;
+    margin: 0.75rem 0 0;
   }
   p.tagline {
     color: var(--muted);
-    font-size: 1.1rem;
-    margin-top: 0.5rem;
+    font-size: 1.15rem;
+    margin: 0.5rem 0 0;
+    text-align: center;
   }
   h2 {
     font-family: var(--font-display);
@@ -76,24 +81,41 @@
     margin-top: 3rem;
   }
   .project {
+    position: relative;
     display: block;
-    border: 1px solid rgba(128,128,128,0.3);
-    border-radius: 10px;
+    border: 2px solid var(--fern);
+    border-radius: 14px;
     padding: 1.25rem 1.5rem;
     text-decoration: none;
-    color: var(--fg);
+    color: var(--ink);
+    background: var(--paper);
+    transition: border-color 0.15s ease, transform 0.15s ease;
   }
-  .project:hover {
-    border-color: var(--accent);
+  .project:hover, .project:focus-visible {
+    border-color: var(--poppy);
+    transform: translateY(-2px);
   }
   .project h3 {
     font-family: var(--font-display);
     margin: 0 0 0.25rem;
-    color: var(--accent);
+    color: var(--fern);
   }
   .project p {
     margin: 0;
     color: var(--muted);
+  }
+  .live-chip {
+    display: inline-block;
+    margin-bottom: 0.6rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: var(--sky);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
   footer {
     margin-top: 4rem;
@@ -105,48 +127,74 @@
 <body>
 <main>
   <header class="hero">
-    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zvuvim mascot, a cartoon fly">
-      <defs>
-        <linearGradient id="wingGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#3EC1D3" stop-opacity="0.8"/>
-          <stop offset="100%" stop-color="#FF5A45" stop-opacity="0.3"/>
-        </linearGradient>
-      </defs>
-      <g stroke="#1B2E28" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.85">
-        <path d="M70 140 Q55 155 40 165"/>
-        <path d="M75 148 Q62 168 50 182"/>
-        <path d="M130 140 Q145 155 160 165"/>
-        <path d="M125 148 Q138 168 150 182"/>
-      </g>
-      <g class="wing left"><ellipse cx="70" cy="80" rx="26" ry="46" fill="url(#wingGrad)" transform="rotate(-25 70 80)"/></g>
-      <g class="wing right"><ellipse cx="130" cy="80" rx="26" ry="46" fill="url(#wingGrad)" transform="rotate(25 130 80)"/></g>
-      <ellipse cx="100" cy="120" rx="52" ry="46" fill="#1E7A5F"/>
-      <ellipse cx="100" cy="132" rx="32" ry="24" fill="#3FAE84"/>
-      <g stroke="#1B2E28" stroke-width="4" stroke-linecap="round" fill="none">
-        <path d="M85 68 Q78 40 62 30"/>
-        <path d="M115 68 Q122 40 138 30"/>
-      </g>
-      <circle cx="62" cy="30" r="5" fill="#FF5A45"/>
-      <circle cx="138" cy="30" r="5" fill="#FF5A45"/>
-      <circle cx="76" cy="88" r="28" fill="#FF5A45"/>
-      <circle cx="124" cy="88" r="28" fill="#FF5A45"/>
-      <circle cx="76" cy="88" r="10" fill="#1B2E28"/>
-      <circle cx="124" cy="88" r="10" fill="#1B2E28"/>
-      <circle cx="70" cy="80" r="5" fill="#fff"/>
-      <circle cx="118" cy="80" r="5" fill="#fff"/>
-      <path d="M90 138 Q100 146 110 138" stroke="#14201C" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>
-    </svg>
+    <div class="mark-wrap">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zvuvim mascot, a cartoon fly">
+        <defs>
+          <linearGradient id="wingGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#3EC1D3" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#FF5A45" stop-opacity="0.3"/>
+          </linearGradient>
+        </defs>
+        <g stroke="#1B2E28" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.85">
+          <path d="M70 140 Q55 155 40 165"/>
+          <path d="M75 148 Q62 168 50 182"/>
+          <path d="M130 140 Q145 155 160 165"/>
+          <path d="M125 148 Q138 168 150 182"/>
+        </g>
+        <g class="wing left"><ellipse cx="70" cy="80" rx="26" ry="46" fill="url(#wingGrad)" transform="rotate(-25 70 80)"/></g>
+        <g class="wing right"><ellipse cx="130" cy="80" rx="26" ry="46" fill="url(#wingGrad)" transform="rotate(25 130 80)"/></g>
+        <ellipse cx="100" cy="120" rx="52" ry="46" fill="#1E7A5F"/>
+        <ellipse cx="100" cy="132" rx="32" ry="24" fill="#3FAE84"/>
+        <g stroke="#1B2E28" stroke-width="4" stroke-linecap="round" fill="none">
+          <path d="M85 68 Q78 40 62 30"/>
+          <path d="M115 68 Q122 40 138 30"/>
+        </g>
+        <circle cx="62" cy="30" r="5" fill="#FF5A45"/>
+        <circle cx="138" cy="30" r="5" fill="#FF5A45"/>
+        <circle cx="76" cy="88" r="28" fill="#FF5A45"/>
+        <circle cx="124" cy="88" r="28" fill="#FF5A45"/>
+        <circle cx="76" cy="88" r="10" fill="#1B2E28"/>
+        <circle cx="124" cy="88" r="10" fill="#1B2E28"/>
+        <circle cx="70" cy="80" r="5" fill="#fff"/>
+        <circle cx="118" cy="80" r="5" fill="#fff"/>
+        <path d="M90 138 Q100 146 110 138" stroke="#14201C" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+    </div>
     <h1>Zvuvim</h1>
   </header>
   <p class="tagline">We make things that help people notice the world they already live in.</p>
 
   <h2>Projects</h2>
-  <a class="project" href="/wild-echo/">
+  <a class="project" href="/wild-echo/" id="wild-echo-card">
+    <span class="live-chip">Live</span>
     <h3>Wild Echo</h3>
     <p>Answer a wild call, then meet who's calling.</p>
   </a>
 
   <footer>One project so far. More lands here as it ships.</footer>
 </main>
+<script>
+  // One real fly wingbeat, one shot per hover. No loop, no autoplay, no
+  // escalation on repeat visits. The card works identically with sound off.
+  (function () {
+    var card = document.getElementById('wild-echo-card');
+    if (!card) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var buzz = null;
+    function getBuzz() {
+      if (!buzz) buzz = new Audio('assets/fly-buzz.mp3');
+      return buzz;
+    }
+    card.addEventListener('mouseenter', function () {
+      var a = getBuzz();
+      a.currentTime = 0;
+      a.play().catch(function () {});
+    });
+    card.addEventListener('mouseleave', function () {
+      if (buzz) buzz.pause();
+    });
+  })();
+</script>
 </body>
 </html>
