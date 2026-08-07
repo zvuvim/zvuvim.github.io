@@ -5,26 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zvuvim</title>
 <meta name="description" content="Zvuvim makes things that help people notice the world they already live in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     color-scheme: light dark;
-    --fg: #1a1a1a;
-    --bg: #ffffff;
-    --accent: #1a6b4a;
+    --font-display: 'Fredoka', sans-serif;
+    --font-body: 'Nunito', 'Helvetica Neue', Arial, sans-serif;
+    --sun: #FFC93C;
+    --fern: #1E7A5F;
+    --poppy: #FF5A45;
+    --sky: #3EC1D3;
+    --paper: #FFF9EC;
+    --ink: #1B2E28;
+    --fg: var(--ink);
+    --bg: var(--paper);
+    --accent: var(--fern);
     --muted: #5a5a5a;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --fg: #f0f0f0;
-      --bg: #14171a;
-      --accent: #5fd9a4;
+      --fg: var(--paper);
+      --bg: var(--ink);
+      --accent: var(--sky);
       --muted: #a0a0a0;
     }
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: var(--font-body);
     color: var(--fg);
     background: var(--bg);
     line-height: 1.5;
@@ -34,16 +44,31 @@
     margin: 0 auto;
     padding: 3rem 1.5rem 4rem;
   }
+  header.hero {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  header.hero svg {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+  }
   h1 {
-    font-size: 2rem;
-    margin-bottom: 0.25rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.25rem;
+    margin: 0;
   }
   p.tagline {
     color: var(--muted);
     font-size: 1.1rem;
-    margin-top: 0;
+    margin-top: 0.5rem;
   }
   h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
     font-size: 1.1rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -62,6 +87,7 @@
     border-color: var(--accent);
   }
   .project h3 {
+    font-family: var(--font-display);
     margin: 0 0 0.25rem;
     color: var(--accent);
   }
@@ -78,7 +104,40 @@
 </head>
 <body>
 <main>
-  <h1>Zvuvim</h1>
+  <header class="hero">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zvuvim mascot, a cartoon fly">
+      <defs>
+        <linearGradient id="wingGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3EC1D3" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#FF5A45" stop-opacity="0.3"/>
+        </linearGradient>
+      </defs>
+      <g stroke="#1B2E28" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.85">
+        <path d="M70 140 Q55 155 40 165"/>
+        <path d="M75 148 Q62 168 50 182"/>
+        <path d="M130 140 Q145 155 160 165"/>
+        <path d="M125 148 Q138 168 150 182"/>
+      </g>
+      <g class="wing left"><ellipse cx="70" cy="80" rx="26" ry="46" fill="url(#wingGrad)" transform="rotate(-25 70 80)"/></g>
+      <g class="wing right"><ellipse cx="130" cy="80" rx="26" ry="46" fill="url(#wingGrad)" transform="rotate(25 130 80)"/></g>
+      <ellipse cx="100" cy="120" rx="52" ry="46" fill="#1E7A5F"/>
+      <ellipse cx="100" cy="132" rx="32" ry="24" fill="#3FAE84"/>
+      <g stroke="#1B2E28" stroke-width="4" stroke-linecap="round" fill="none">
+        <path d="M85 68 Q78 40 62 30"/>
+        <path d="M115 68 Q122 40 138 30"/>
+      </g>
+      <circle cx="62" cy="30" r="5" fill="#FF5A45"/>
+      <circle cx="138" cy="30" r="5" fill="#FF5A45"/>
+      <circle cx="76" cy="88" r="28" fill="#FF5A45"/>
+      <circle cx="124" cy="88" r="28" fill="#FF5A45"/>
+      <circle cx="76" cy="88" r="10" fill="#1B2E28"/>
+      <circle cx="124" cy="88" r="10" fill="#1B2E28"/>
+      <circle cx="70" cy="80" r="5" fill="#fff"/>
+      <circle cx="118" cy="80" r="5" fill="#fff"/>
+      <path d="M90 138 Q100 146 110 138" stroke="#14201C" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>
+    </svg>
+    <h1>Zvuvim</h1>
+  </header>
   <p class="tagline">We make things that help people notice the world they already live in.</p>
 
   <h2>Projects</h2>
