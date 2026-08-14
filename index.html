@@ -122,13 +122,65 @@
     color: var(--muted);
     font-size: 0.9rem;
   }
+  .bluesky-link {
+    color: var(--fern);
+    font-weight: 600;
+    text-decoration: underline;
+    margin-left: 0.5em;
+  }
+  .bluesky-link:hover, .bluesky-link:focus-visible {
+    color: var(--poppy);
+  }
+
+  /* Startle-and-resettle: one-shot ~400ms on hover/tap, never a loop, never
+     scroll-triggered. Wings flicker opacity to fake a wingbeat blur, body
+     hops, antennae twitch, then hard-settles back to rest. */
+  @keyframes fly-hop {
+    0% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+    60% { transform: translateY(1px); }
+    100% { transform: translateY(0); }
+  }
+  @keyframes wing-blur {
+    0%, 100% { opacity: 0.85; }
+    15% { opacity: 0.25; }
+    30% { opacity: 1; }
+    45% { opacity: 0.3; }
+    60% { opacity: 1; }
+    75% { opacity: 0.5; }
+  }
+  @keyframes antenna-twitch {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-6deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-2deg); }
+  }
+  #mascot.startle {
+    animation: fly-hop 380ms ease-out;
+  }
+  #mascot.startle .wing.left,
+  #mascot.startle .wing.right {
+    animation: wing-blur 380ms ease-out;
+  }
+  #mascot.startle .antennae {
+    animation: antenna-twitch 380ms ease-out;
+    transform-origin: 100px 68px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #mascot.startle,
+    #mascot.startle .wing.left,
+    #mascot.startle .wing.right,
+    #mascot.startle .antennae {
+      animation: none;
+    }
+  }
 </style>
 </head>
 <body>
 <main>
   <header class="hero">
     <div class="mark-wrap">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zvuvim mascot, a cartoon fly">
+      <svg id="mascot" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zvuvim mascot, a cartoon fly">
         <defs>
           <linearGradient id="wingGrad" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stop-color="#3EC1D3" stop-opacity="0.8"/>
@@ -145,7 +197,7 @@
         <g class="wing right"><ellipse cx="130" cy="80" rx="26" ry="46" fill="url(#wingGrad)" transform="rotate(25 130 80)"/></g>
         <ellipse cx="100" cy="120" rx="52" ry="46" fill="#1E7A5F"/>
         <ellipse cx="100" cy="132" rx="32" ry="24" fill="#3FAE84"/>
-        <g stroke="#1B2E28" stroke-width="4" stroke-linecap="round" fill="none">
+        <g class="antennae" stroke="#1B2E28" stroke-width="4" stroke-linecap="round" fill="none">
           <path d="M85 68 Q78 40 62 30"/>
           <path d="M115 68 Q122 40 138 30"/>
         </g>
@@ -170,8 +222,13 @@
     <h3>Wild Echo</h3>
     <p>Answer a wild call, then meet who's calling.</p>
   </a>
+  <a class="project" href="/turtle-compass/" id="turtle-compass-card">
+    <span class="live-chip">Live</span>
+    <h3>Turtle Compass</h3>
+    <p>A hatchling leaves. Decades later, it comes back to the same beach.</p>
+  </a>
 
-  <footer>One project so far. More lands here as it ships.</footer>
+  <footer>Two projects so far. More lands here as it ships. <a class="bluesky-link" href="https://bsky.app/profile/zvuvim.bsky.social" target="_blank" rel="noopener">Follow on Bluesky</a></footer>
 </main>
 <script>
   // One real fly wingbeat, one shot per hover. No loop, no autoplay, no
@@ -194,6 +251,31 @@
     card.addEventListener('mouseleave', function () {
       if (buzz) buzz.pause();
     });
+  })();
+
+  // Startle-and-resettle: one-shot ~400ms wing/body/antenna flicker on
+  // hover or tap, never a loop, never scroll-triggered, no escalation on
+  // repeat. Yael's direction (mail/to-noam/2026-08-13-yael-fly-motion-direction.md):
+  // CSS keyframes do the animation, this JS only adds/removes the class so
+  // touch (no :hover) can trigger it too, and so it can retrigger on the
+  // next hover/tap instead of running once ever.
+  (function () {
+    var mascot = document.getElementById('mascot');
+    if (!mascot) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    function startle() {
+      mascot.classList.remove('startle');
+      // Force reflow so re-adding the class restarts the animation even
+      // if it's re-triggered before the previous run finished.
+      void mascot.offsetWidth;
+      mascot.classList.add('startle');
+    }
+    mascot.addEventListener('animationend', function () {
+      mascot.classList.remove('startle');
+    });
+    mascot.closest('.mark-wrap').addEventListener('mouseenter', startle);
+    mascot.closest('.mark-wrap').addEventListener('touchstart', startle, { passive: true });
   })();
 </script>
 </body>
